@@ -1,3 +1,3 @@
 - - - - - -
-# Programmer Algorithm study
+# Programmers Algorithm study
 - - - - - -
