@@ -8,14 +8,19 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Scanner;
-import java.util.UUID;
+import java.util.*;
 
 public class RuleConfig {
 
 
     public static void main(String[] args) {
+
+        RuleConfig r = new RuleConfig();
+        //run 메서드 실행
+        System.out.println("|txAppend|@2013|@231 전달함 값은? "+r.run("|txAppend|@2013|@231"));
+
+
+
 
         //txAppend 실행
         System.out.println("txAppend "+txAppend("dff", "dfe"));
@@ -114,9 +119,8 @@ public class RuleConfig {
         //getUUID 실행
         System.out.println("getUUID " + getUUID());
 
-
-        //1000! 계산
-        System.out.println(factorial(1000));
+        //getFact
+        System.out.println(getFactorial(1000));
 
     }
 
@@ -581,19 +585,80 @@ public class RuleConfig {
         return UUID.randomUUID().toString();
     };
 
-    //팩토리얼 계산
-    static int factorial(int n) {
-        if(n>0) {
-            return n*factorial(n-1);
+
+
+
+    public static double getFactorial(int num) {
+        if(num <= 1){
+            return  num;
+        } else {
+            return getFactorial(num-1)*num;
         }
-        else {
-            return 1;
+
+    };
+
+
+    public static String run(String txParam){
+        //파라미터를 이렇게 받는다
+        // |txFixdate|@2013|@231
+
+        String oneStr = txParam.replaceAll("\\|","");
+        System.out.println("성공적으로 잘린 문자열"+oneStr);
+        //@를 기준으로 문자열 자르기 몇개가 나올지는 모른다.
+        String[] argParam = oneStr.split("@");
+
+        HashMap<String,Object> map = new HashMap<>();
+
+        //param이 몇개 있을지 모르니깐 반복으로 처리
+        for(int i=0; i< argParam.length; i++){
+            //param의 1번째 값은 rule , 2번째 부터... param.
+            System.out.println(argParam[i].toString());
+            if(i == 0){
+                map.put("data",argParam[i]);
+                continue;
+            }
+            map.put("param" + i, argParam[i]);
+
         }
+        //정상적으로 자름.
+        System.out.println(map.toString());
 
-    }
+        // run 함수 이름에 따라서 Rule Function List
+        //map.get object 타입을 매번 형변환 할 수 없으니 미리 변환시켜놓기
 
+        Object answer = "";
 
+        switch ((String)map.get("data")){
+            case "txAppend" :
+                System.out.println("txAppend 함수");
+                answer = txAppend((String)map.get("param1"),(String)map.get("param2"));
+                System.out.println("param1값: " +(String)map.get("param1"));
+                System.out.println("param2값: " +(String)map.get("param2"));
+//                System.out.println(answer.toString());
+                break;
 
+            case  "txAppendWithSpace" :
+                System.out.println("txAppendWithSpace 함수");
+//                txAppendWithSpace();
+        }
+//        System.out.println("이거이거"+answer.toString());
+        return answer.toString();
+    };
+
+    //벡터를 사용한 run1
+//    public static String run1(String txtParam){
+//
+//        Vector<String> vector = new Vector<>();
+//
+//        String vecStr = txtParam.replaceAll("\\|","");
+//        System.out.println("성공적으로 잘린 문자열"+vecStr);
+//
+//        String[] argParam = vecStr.split("@");
+//
+//        vector.add(argParam[0]);
+//
+//
+//    };
 
 
 }
