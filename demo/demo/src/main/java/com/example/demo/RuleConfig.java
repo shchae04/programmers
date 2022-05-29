@@ -17,7 +17,7 @@ public class RuleConfig {
 
         RuleConfig r = new RuleConfig();
         //run 메서드 실행
-        System.out.println("|txAppend|@2013|@231 전달함 값은? "+r.run("|txAppend|@2013|@231"));
+//        System.out.println("|txAppend|@2013|@231 전달함 값은? "+r.run("|txAppend|@2013|@231"));
 
 
 
@@ -122,15 +122,17 @@ public class RuleConfig {
         //getFact
         System.out.println(getFactorial(1000));
 
+        //run1 실행
+        System.out.println("method run1실행"+r.run1(   "|txAppend|@2013|@231"));
+
     }
 
 
     //txAppend
     public static String txAppend(String a, String b){
-        String cnt = "";
-        cnt = a + b;
 
-        return cnt;
+
+        return a + b;
     };
 
     //txAppendWithSpace
@@ -145,10 +147,9 @@ public class RuleConfig {
     //txSubstring
     public static String txSubstring(String str, int a, int b){
 
-        String cnt ="";
-        cnt = str.substring(a, b);
 
-        return cnt;
+
+        return str.substring(a, b);
     };
 
     //txSubstringWithHan Byte로 입력받음
@@ -646,19 +647,38 @@ public class RuleConfig {
     };
 
     //벡터를 사용한 run1
-//    public static String run1(String txtParam){
-//
-//        Vector<String> vector = new Vector<>();
-//
-//        String vecStr = txtParam.replaceAll("\\|","");
-//        System.out.println("성공적으로 잘린 문자열"+vecStr);
-//
-//        String[] argParam = vecStr.split("@");
-//
-//        vector.add(argParam[0]);
-//
-//
-//    };
+
+    // Java Collection Vector는 Thread-Safe하다. 동기화가 순차적으로 이루어지기 때문이다.
+    //여러 쓰레드에서 같은 리스트를 쓴다면 Vector를 쓰는것이 동기화 오류를 만들지 않는다. 벡터는 동작마다 동기화를 걸어줍니다. 속도를 떨어뜨리게하지만
+    //멀티 쓰레드 환경에서는 안전한 작업입니다. Multi-Thread환경이라면 Vector를 사용하고 단일쓰레드를 사용한다면 Arraylist를 사용하면 됩니다.
+
+    public static String run1(String txtParam){
+
+        Vector<String> vector = new Vector<>();
+
+        String vecStr = txtParam.replaceAll("\\|","");
+        System.out.println("성공적으로 잘린 문자열"+vecStr);
+
+        String[] argParam = vecStr.split("@");
+
+        // data로 들어갈 값
+        vector.add(argParam[0]);
+
+        // param 값으로 들어갈 값
+        for(int i=1; i<argParam.length; i++){
+          vector.add(argParam[i]);
+        };
+        String  answer = "";
+
+        switch (vector.get(0)){
+            case "txAppend" :
+                System.out.println("txAppend 함수 실행");
+                answer = txAppend(vector.get(1),vector.get(2));
+                break;
+        }
+
+        return answer;
+    };
 
 
 }
