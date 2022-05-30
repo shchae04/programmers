@@ -3,7 +3,7 @@ package com.example.demo;
 
 public class FactorialArray
 {
-    // FactorialArray constructor
+    // 배열로 팩토리얼 계산!
     public static void main(String[] args) {
         FactorialArray f = new FactorialArray(30);
         System.out.println("팩토리얼 보여줘!" + f.getProductAsString());
@@ -12,20 +12,24 @@ public class FactorialArray
     {
         index = 0;
         product[index] = 1; // Initializes the first digit as 1
+        // 첫번째 숫자를 1로 초기화
 
         // The remaining numbers in the array are initialized as -1
+        //배열의 나머지 숫자는 -1로 초기화됩니다.
         for (int i = 1; i < product.length; i++) product[i] = -1;
 
-        // Calculates the factorial by muliplying by 2, 3 ... number
+        // 팩토리얼 계산 메서드 호출
         for (int n = 2; n <= number; n++) multiply(n);
     }
 
     // Returns the contents of the array formatted as a String, excluding all indices containing -1
+    //-1을 포함하는 모든 인덱스를 제외하고 문자열로 포맷된 배열의 내용을 반환합니다.
     public String getProductAsString()
     {
         String productString = "";
 
         // Prints in reverse order because the greatest digit is the last in the array
+        //배열에서 가장 큰 자릿수가 마지막이기 때문에 역순으로 인쇄합니다.
         for (int i = index; i >= 0; i--) productString += product[i];
 
         return productString;
