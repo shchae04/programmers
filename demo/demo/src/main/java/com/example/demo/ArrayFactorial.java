@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import com.sun.javafx.binding.BidirectionalBinding;
+import org.apache.tomcat.util.collections.SynchronizedStack;
+
 public class ArrayFactorial
 {
 
@@ -7,7 +10,7 @@ public class ArrayFactorial
     //팩토리얼 연산 시작 !
     public static void main(String[] args) {
 
-        ArrayFactorial arr = new ArrayFactorial(1000);
+        ArrayFactorial arr = new ArrayFactorial(14);
         System.out.println("팩토리얼 값은 ?  : " +arr.getFact());
 
     }
@@ -70,6 +73,7 @@ public class ArrayFactorial
 
                 if(product[i + 1] == -1){
                     //해당하는 다음 인덱스 값을 -1에서 0으로 변경해준다. 즉 {1,2,3,12}인 경우 {1,2,3,12,0}으로 변경.
+                    //다음에 해당하는 값을 0으로 설정한후 2,1 로 변경해주면 된다. 변경했으면 해라 다 다 하면된당.
                     product[++index] = 0;
                 }
 
@@ -132,8 +136,4 @@ product[0] = 2가 되겠다 이러한 상황에서 자릿수가 9를 넘어가�
 
 다 메서드로 나누면 될듯.. 잘?,
      */
-
-
-
-
 }

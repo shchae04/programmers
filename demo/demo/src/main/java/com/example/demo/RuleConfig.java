@@ -15,20 +15,20 @@ public class RuleConfig {
 //        System.out.println("|txAppend|@2013|@231 전달함 값은? "+r.run("|txAppend|@2013|@231"));
 
 
-        //txAppend 실행
-        System.out.println("txAppend " + txAppend("dff", "dfe"));
+        //Append 실행
+        System.out.println("Append " + append("dff", "dfe"));
 
-        //txAppendWithSpace 실행
-        System.out.println("txAppendWithSpace " + txAppendWithSpace("dfdd", "dfdfd"));
+        //AppendWithSpace 실
+        System.out.println("AppendWithSpace " + appendWithSpace("dfdd", "dfdfd"));
 
-        //txSubstring 실행
-        System.out.println("txSubstring " + txSubstring("abcdefg", 0, 3));
+        //Substring 실행
+        System.out.println("Substring " + substring("abcdefg", 0, 3));
 
-        //txSubstringWithHan 실행
-        System.out.println("txSubstringWithHan " + txSubstringWithHan("가나다라마", 0, 6));
+        //SubstringWithHan 실행
+        System.out.println("SubstringWithHan " + substringWithHan("가나다라마", 0, 6));
 
-        //txGetNotMatch 실행
-        System.out.println("txGetNotMatch " + txGetNotMatch("가나", "가나", "가나다라"));
+        //GetNotMatch 실행
+        System.out.println("GetNotMatch " + getNotMatch("가나", "가나", "가나다라"));
 
         //ifExist
         System.out.println("ifExist " + ifExist("ab", "ab", "TRUE"));
@@ -36,32 +36,32 @@ public class RuleConfig {
         //ifNotExist
         System.out.println("ifNotExist " + ifNotExist("av", "av", "dfdf"));
 
-        //txLeftFillen
-        System.out.println("txLeftFillen " + txLeftFillen("-ABCDEF", 10, "#"));
+        //LeftFillen
+        System.out.println("LeftFillen " + LeftFillen("-ABCDEF", 10, "#"));
 
-        //txRightFillLen
-        System.out.println("txRightFillLen " + txRightFillLen("ABCDEF", 10, "#"));
+        //RightFillLen
+        System.out.println("RightFillLen " + RightFillLen("ABCDEF", 10, "#"));
 
-        //txChangeSpace
-        System.out.println("txChangeSpace " + txChangeSpace("", "1234"));
+        //ChangeSpace
+        System.out.println("ChangeSpace " + ChangeSpace("", "1234"));
 
-        //txChangeString
-        System.out.println("txChangeString " + txChangeString("ab", "ab", "cde"));
+        //ChangeString
+        System.out.println("ChangeString " + ChangeString("ab", "ab", "cde"));
 
-        //txOmit
-        System.out.println("txOmit " + txOmit("###ab###", "#"));
+        //Omit
+        System.out.println("Omit " + Omit("###ab###", "#"));
 
-        //txFixDownDecimalPlaces
-        System.out.println("txFixDownDecimalPlaces " + txFixDownDecimalPlaces(123456, 3));
+        //FixDownDecimalPlaces
+        System.out.println("FixDownDecimalPlaces " + FixDownDecimalPlaces(123456, 3));
 
-        //txFixDate
-        System.out.println("txFixDate " + txFixDate("150602", 6));
+        //FixDate
+        System.out.println("FixDate " + FixDate("150602", 6));
 
-        //txCutPadddingzero
-        System.out.println("txCutPadddingzero " + txCutPadddingzero("001234"));
+        //CutPadddingzero
+        System.out.println("CutPadddingzero " + cutPadddingzero("001234"));
 
-        //txReverseSubstring
-        System.out.println("txReverseSubstring " + txReverseSubstring("ABCDEFG", 2, 4));
+        //ReverseSubstring
+        System.out.println("ReverseSubstring " + ReverseSubstring("ABCDEFG", 2, 4));
 
         //leftSubstring
         System.out.println("leftSubstring " + leftSubstring("ABCDEFG", 2));
@@ -72,42 +72,40 @@ public class RuleConfig {
         //fillNumberZero
         System.out.println("fillNumberZero " + fillNumberZero("ABCDEFG", 10));
 
-        //txGetTimeStr
-        System.out.println("txGetTimeStr " + txGetTimeStr(new Date()));
-        //txReplace
-        System.out.println("txReplace " + txReplace("ABCDEEFF", "E", "H"));
-
-        //decode
+        //GetTimeStr
+        System.out.println("GetTimeStr " + GetTimeStr(new Date()));
+        //Replace
+        System.out.println("Replace " + Replace("ABCDEEFF", "E", "H"));//decode
         System.out.println("decode " + decode("ABC", "A", "1", "AB", "2", "3"));
-        //txExistCondition
-        System.out.println(txExistCondition("ABC", "DEF", "GHI"));
+        //ExistCondition
+        System.out.println(ExistCondition("ABC", "DEF", "GHI"));
         //ifExistValues
         System.out.println(ifExistValues("ABC"));
         //ifNotExistValues
         System.out.println(ifNotExistValues("ABC"));
-        //txExitstCondition2
-        System.out.println(txExistCondition2("ABC", "DEF"));
-        //txChDateFormat
-        System.out.println(txChDateFormat("20150625", "ddMMyyyy"));
-        //txChFormat
-        System.out.println("txChFormat " + txChFormat("20150625", "yyyyMMdd", "yyyy-MM-dd"));
-        //txToUpper 실행
-        System.out.println("txToUpper " + txToUpper("abcde"));
+        //ExitstCondition2
+        System.out.println(ExistCondition2("ABC", "DEF"));
+        //ChDateFormat
+        System.out.println(ChDateFormat("20150625", "ddMMyyyy"));
+        //ChFormat
+        System.out.println("ChFormat " + ChFormat("20150625", "yyyyMMdd", "yyyy-MM-dd"));
+        //ToUpper 실행
+        System.out.println("ToUpper " + ToUpper("abcde"));
 
-        //txToLower 실행
-        System.out.println("txToLower " + txToLower("ABCDE"));
+        //ToLower 실행
+        System.out.println("ToLower " + ToLower("ABCDE"));
 
-        //txRemoveSpaces 실행
-        System.out.println("txRemoveSpaces " + txRemoveSpaces("abc de ef"));
+        //RemoveSpaces 실행
+        System.out.println("RemoveSpaces " + RemoveSpaces("abc de ef"));
 
-        //txZeroToNull 실행
-        System.out.println("txZeroToNull " + txZeroToNull(0));
+        //ZeroToNull 실행
+        System.out.println("ZeroToNull " + ZeroToNull(0));
 
         //codemap 실행
         System.out.println("codemap " + codemap("A", "A", "B", "C", "D"));
 
-        //txSplit 실행
-        System.out.println("txSplit " + txSplit("ABCDE", "C", 1));
+        //Split 실행
+        System.out.println("Split " + Split("ABCDE", "C", 1));
 
         //getUUID 실행
         System.out.println("getUUID " + getUUID());
@@ -121,15 +119,15 @@ public class RuleConfig {
     }
 
 
-    //txAppend
-    public static String txAppend(String a, String b) {
+    //Append
+    public static String append(String a, String b) {
 
 
         return a + b;
     }
 
-    //txAppendWithSpace
-    public static String txAppendWithSpace(String a, String b) {
+    //AppendWithSpace
+    public static String appendWithSpace(String a, String b) {
 
         String cnt = "";
         cnt = a + " " + b;
@@ -137,15 +135,15 @@ public class RuleConfig {
         return cnt;
     }
 
-    //txSubstring
-    public static String txSubstring(String str, int a, int b) {
+    //Substring
+    public static String substring(String str, int a, int b) {
 
 
         return str.substring(a, b);
     }
 
-    //txSubstringWithHan Byte로 입력받음
-    public static String txSubstringWithHan(String str, int beginBytes, int endBytes) {
+    //SubstringWithHan Byte로 입력받음
+    public static String substringWithHan(String str, int beginBytes, int endBytes) {
 
         //문자열이 비어있을 경우
         if (str == null || str.getBytes().length == 0) {
@@ -196,9 +194,9 @@ public class RuleConfig {
         return str.substring(beginIndex, endIndex);
     }
 
-    //tGetNotMatch
+    //GetNotMatch
     //2~n까지 가변인자.
-    public static String txGetNotMatch(String a, String... str) {
+    public static String getNotMatch(String a, String... str) {
 
         if (a == null || str == null || str.equals("")) {
             return "";
@@ -234,8 +232,8 @@ public class RuleConfig {
         }
     }
 
-    //txLeftFillen
-    public static String txLeftFillen(String str, int num, String addStr) {
+    //LeftFillen
+    public static String LeftFillen(String str, int num, String addStr) {
         //두번째 param만큼 자리수를 늘리고 세번째 문자열을 채운다. 두번째 파라미터수가 첫번쨰 자리수보다 작으면
         //빈 문자열 리턴
 
@@ -264,8 +262,8 @@ public class RuleConfig {
         return tempStr.toString();
     }
 
-    //txRightFillLen
-    public static String txRightFillLen(String str, int num, String addStr) {
+    //RightFillLen
+    public static String RightFillLen(String str, int num, String addStr) {
         StringBuilder tempStr = new StringBuilder(str);
 
         for (int i = 0; i < num; i++) {
@@ -278,16 +276,16 @@ public class RuleConfig {
         return tempStr.toString();
     }
 
-    //txChangeSpace
-    public static String txChangeSpace(String s1, String s2) {
+    //ChangeSpace
+    public static String ChangeSpace(String s1, String s2) {
         if (s1.isEmpty()) {
             return s2;
         }
         return s1;
     }
 
-    //txChangeString
-    public static String txChangeString(String str1, String str2, String strValue) {
+    //ChangeString
+    public static String ChangeString(String str1, String str2, String strValue) {
         if (str1 == null) {
             System.out.println("값입력");
         }
@@ -296,8 +294,8 @@ public class RuleConfig {
         } else return str1;
     }
 
-    //txOmit
-    public static String txOmit(String str, String delStr) {
+    //Omit
+    public static String Omit(String str, String delStr) {
         //첫번째 문자열에 두번째 문자열이 있을 경우 제거하고 리턴
         //문자열은 불변 ***************************이거 까먹어서 엄청 오래걸렸다..
 
@@ -306,8 +304,8 @@ public class RuleConfig {
         return text;
     }
 
-    //txFixDownDecimalPlaces
-    public static String txFixDownDecimalPlaces(double realNum, int cNum) {
+    //FixDownDecimalPlaces
+    public static String FixDownDecimalPlaces(double realNum, int cNum) {
         //첫번째 파라미터를 두번째 파라미터만큼 소수점 처리 소수점이 없으면 두번째 파라미터 수만큼 0처리
 
         System.out.println(String.format("%." + cNum + "f", realNum));
@@ -324,8 +322,8 @@ public class RuleConfig {
         return sbd.toString();
     }
 
-    //txFixDate //사용 미권장 메서드
-    public static String txFixDate(String birth, int se) {
+    //FixDate //사용 미권장 메서드
+    public static String FixDate(String birth, int se) {
         //20150602 or 150602
         if (birth.length() != 6 || birth.length() != 8 && se != 6 || se != 8) {
             return birth;
@@ -347,8 +345,8 @@ public class RuleConfig {
     }
 
 
-    //txCutPadddingzero
-    public static String txCutPadddingzero(String num) {
+    //CutPadddingzero
+    public static String cutPadddingzero(String num) {
 
         //String으로 받는경우와 int로 받는 경우로 구분함.
 //        String regexNum = Integer.toString(num);
@@ -360,8 +358,8 @@ public class RuleConfig {
 //        return regexNum;
     }
 
-    //txReverseSubstring
-    public static String txReverseSubstring(String str, int begin, int end) {
+    //ReverseSubstring
+    public static String ReverseSubstring(String str, int begin, int end) {
         //문자열을 거꾸로 subString한다 1. 배열을 뒤집어서 자른후 다시 뒤집는다. 2. 반복문으로 뒤에서부터 자른다.
 
         if ((begin > end) || !(begin >= 0) || !(end >= 1)) {
@@ -414,8 +412,8 @@ public class RuleConfig {
         return exStr.toString();
     }
 
-    //txGetTimeStr
-    public static String txGetTimeStr(Date dater) {
+    //GetTimeStr
+    public static String GetTimeStr(Date dater) {
         SimpleDateFormat date = new SimpleDateFormat("YYYY-MM-DD HH:mm:ss");
 
 
@@ -423,8 +421,8 @@ public class RuleConfig {
 
     }
 
-    //txReplace
-    public static String txReplace(String str, String exStr, String coStr) {
+    //Replace
+    public static String Replace(String str, String exStr, String coStr) {
         return str.replace(exStr, coStr);
     }
 
@@ -449,8 +447,8 @@ public class RuleConfig {
         } else return str;
     }
 
-    //txExistCondition
-    public static String txExistCondition(String str1, String str2, String str3) {
+    //ExistCondition
+    public static String ExistCondition(String str1, String str2, String str3) {
 
         if (str1 == null || str1 == "") {
             return str2;
@@ -478,14 +476,14 @@ public class RuleConfig {
     }
 
     //
-    public static String txExistCondition2(String str1, String str2) {
+    public static String ExistCondition2(String str1, String str2) {
         if (str1 != null | !Objects.equals(str1, "")) {
             return str1;
         } else return str2;
     }
 
-    //txChDateFormat
-    public static String txChDateFormat(String str, String formatted) {
+    //chDateFormat
+    public static String ChDateFormat(String str, String formatted) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         LocalDate date = LocalDate.parse(str, formatter);
@@ -497,8 +495,8 @@ public class RuleConfig {
         return convDate;
     }
 
-    //txChFormat
-    public static String txChFormat(String str, String format1, String format2) {
+    //ChFormat
+    public static String ChFormat(String str, String format1, String format2) {
         //세번째 파라미터 형태로 리턴 format2 format1?,,
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 //        LocalDate date = LocalDate.parse(str,formatter);
@@ -528,31 +526,31 @@ public class RuleConfig {
 
     }
 
-    //txToUpper
-    public static String txToUpper(String str) {
+    //ToUpper
+    public static String ToUpper(String str) {
 
         String exStr = str.toUpperCase();
 
         return exStr;
     }
 
-    //txToLower
-    public static String txToLower(String str) {
+    //ToLower
+    public static String ToLower(String str) {
 
         String exStr = str.toLowerCase();
 
         return exStr;
     }
 
-    //txRemoveSpaces
-    public static String txRemoveSpaces(String str) {
+    //RemoveSpaces
+    public static String RemoveSpaces(String str) {
         String exStr = str.replace(" ", "");
         System.out.println(exStr);
         return exStr;
     }
 
-    //txZeroToNull
-    public static String txZeroToNull(int zero) {
+    //ZeroToNull
+    public static String ZeroToNull(int zero) {
         //0을 빈문자열로 리턴
 
         return "";
@@ -569,8 +567,8 @@ public class RuleConfig {
         return data;
     }
 
-    //txSplit
-    public static String txSplit(String str, String spStr, int cut) {
+    //Split
+    public static String Split(String str, String spStr, int cut) {
 
         String[] arr = str.split(spStr);
         if (cut >= arr.length) {
@@ -627,17 +625,17 @@ public class RuleConfig {
         Object answer = "";
 
         switch ((String) map.get("data")) {
-            case "txAppend":
-                System.out.println("txAppend 함수");
-                answer = txAppend((String) map.get("param1"), (String) map.get("param2"));
+            case "Append":
+                System.out.println("Append 함수");
+                answer = append((String) map.get("param1"), (String) map.get("param2"));
                 System.out.println("param1값: " + map.get("param1"));
                 System.out.println("param2값: " + map.get("param2"));
 //                System.out.println(answer.toString());
                 break;
 
-            case "txAppendWithSpace":
-                System.out.println("txAppendWithSpace 함수");
-//                txAppendWithSpace();
+            case "AppendWithSpace":
+                System.out.println("AppendWithSpace 함수");
+//                appendWithSpace();
         }
 //        System.out.println("이거이거"+answer.toString());
         return answer.toString();
@@ -670,17 +668,17 @@ public class RuleConfig {
         String answer = "";
 
         switch (vector.get(0)) {
-            case "txAppend":
-                System.out.println("txAppend 함수 실행");
-                answer = txAppend(vector.get(1), vector.get(2));
+            case "Append":
+                System.out.println("Append 함수 실행");
+                answer = append(vector.get(1), vector.get(2));
                 break;
-            case "txAppendWithSpace":
-                System.out.println("txAppendWithSpace 함수 실행");
-                answer = txAppendWithSpace(vector.get(1), vector.get(2));
+            case "AppendWithSpace":
+                System.out.println("AppendWithSpace 함수 실행");
+                answer = appendWithSpace(vector.get(1), vector.get(2));
                 break;
-            case "txSubstring":
-                System.out.println("txSubstring 함수 실행");
-                answer = txSubstring(vector.get(0), Integer.parseInt(vector.get(1)), Integer.parseInt(vector.get(2)));
+            case "Substring":
+                System.out.println("Substring 함수 실행");
+                answer = substring(vector.get(0), Integer.parseInt(vector.get(1)), Integer.parseInt(vector.get(2)));
                 break;
 
             //Case : 추가하면 됩니다.
@@ -688,6 +686,8 @@ public class RuleConfig {
 
         return answer;
     }
+
+
 
 
 }
