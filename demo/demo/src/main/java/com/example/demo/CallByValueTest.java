@@ -5,6 +5,13 @@ public class CallByValueTest {
     public static void main(String[] args) {
         CallByValueTest test = new CallByValueTest();
         test.method1();
+
+    /*
+    String s = "12345";
+    String 형을 바로 int에 바로 변수값으로 넣을 때 사용합니다.
+    int num = s.charAt(1) - '0';
+        System.out.println(num);
+        */
     }
 
     public void method1() {
