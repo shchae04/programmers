@@ -85,13 +85,16 @@ public class KeyPadInPut
         index = (index == 0) ? 11 : index;
         number = (number == 0) ? 11 :number;
 
+        //손가락 위치를 좌표에 표현
         int x = (index - 1) / 3;
         int y = (index -1) % 3;
 
+        //입력받은 값 좌표에 표현
         int numberX = number / 3;
         int numberY = 1; //2,5,8,11은 값 고정
 
         return Math.abs(x - numberX) + Math.abs(y - numberY);
+
 
     }
 }
