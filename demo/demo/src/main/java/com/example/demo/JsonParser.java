@@ -1,19 +1,15 @@
 package com.example.demo;
 
-import java.util.HashMap;
-import java.util.Map;
+import jdk.nashorn.internal.objects.annotations.Getter;
 
+import java.util.*;
+
+//Json Data(String)을 받은 JsonParser(data)를 생성. getJson-> data(0) = {}, data(1) =  {}, ~~~ map을 리턴 함.
 public class JsonParser {
 
-    private String id;
-    private String name;
-    private String address;
-
-
-
+    //실행함수
     public static void main(String[] args) {
-        JsonParser p = new JsonParser();
-        Map<String,String> getMap =  p.jsonToString("{\n" +
+        String jsonData = "{\n" +
                 "  \"data\": [\n" +
                 "    {\n" +
                 "      \"id\": 1,\n" +
@@ -31,80 +27,95 @@ public class JsonParser {
                 "      \"address\": \"제주도\"\n" +
                 "    }\n" +
                 "  ]\n" +
-                "    }  ");
+                "    } ";
 
-
-
-        System.out.println(getMap.get("data0")+"이걸 어떻게 활용하냐?");
-        String[] param = getMap.get("data0").split(",");
-        System.out.println(param[0]);
-        String[] temp = param[0].replace("\"","").split(":");
-        System.out.println(temp[0]); // id
-        System.out.println(temp[1]); // 1
-
-
-        //요구사항 getMap.get("data0").get("id") = 3이 나와야 한다.
-         getMap.get("data1").split(",");
-
-         String key ="";
-         String value ="";
-
-         for(int i=0; i< temp.length; i++){
-            if(key.equals(temp[i])){
-                value = temp[1];
-            }
-            return;
-
-         }
-
+        JsonParser parser = new JsonParser(jsonData);
+        System.out.println(parser.getJson().getResult(0).getValue("id")+"문제?");
 
 
     }
 
+    private String data;
 
-    //JAVA JSON PARSER
-    /*
-    {
-  "data": [
-    {
-      "id": 1,
-      "name": "공유",
-      "address": "서울"
-    },
-    {
-      "id": 2,
-      "name": "박서준",
-      "address": "부산"
-    },
-    {
-      "id": 3,
-      "name": "수박",
-      "address": "제주도"
+    JsonParser(String data) {
+        this.data = data;
     }
-  ]
-    }                   JSON 데이터 전송 받는 형식.
-    */
 
-    //변환해서 String 전달
-    public Map<String, String> jsonToString(String jsonFile){
 
-        String altStr = jsonFile.substring(jsonFile.indexOf("[")+1,jsonFile.indexOf("]"));
-//        System.out.println(altStr.split("},")[0].replace("{",""));
-        String[] strSize = altStr.split("},");
+    //Json(String)을 전달받아서 자른후 map에 넣어줌.
+    private JsonParser getJson() {
 
-        Map<String,String> map = new HashMap<>();
+        //문자열 필터링.
+        String[] altStr = filtStr(data).data.split(" ,");
 
-        for(int i=0; i< strSize.length; i++){
-            String alterStr = strSize[i].replace("{","").replace("}","");
-            map.put("data"+i,alterStr);
+        Map<String, String> map = new HashMap<>();
+        List<String> list = new ArrayList<>();
+
+        for (int i = 0; i < altStr.length; i++) {
+
+            map.put("data" + i, altStr[i]);
         }
-//        System.out.println(altStr.replace("{","").replace("}",""));
-        System.out.println(map.get("data2"));
 
-        return map;
+
+        return this;
     }
 
-    //p라는 객체가 JsonToString해서 map이라는 값을 들고 있다 이 map이라는 값을 받는 메서드를 만들자.
+    ;
+
+    private JsonParser filtStr(String str) {
+
+        //변환
+        String[] tempStr = str.substring(str.indexOf("[") + 1, str.indexOf("]"))
+                .split("}");
+        String returnStr = "";
+
+        for (String s : tempStr) {
+
+            returnStr += s.replace("{", "").replace("}", "");
+
+        }
+        System.out.println(returnStr);
+
+        data = returnStr;
+        return this;
+    }
+
+    ;
+
+
+    private JsonParser getResult(int num) {
+
+        data = data.split(" ,")[num];
+        return this;
+    }
+
+    private String getValue(String id) {
+
+        //Json의 여러 데이터중 한개를 받아옴 {"n1":"2","n2":"3", ~~~} 이런 형식으로 받아옴.
+        String[] temp = data.replace(" ","").split(",");
+
+        //이중 배열 선언
+        String[][] arrTemp = new String[100][100];
+
+        String get = "d";
+     loop: for(int i=0; i< temp.length; i++){
+            for(int j=0; j<2; j++){
+                arrTemp[i][j] = temp[j];
+                //정상적으로 배열에 들어감.
+                System.out.println(arrTemp[i][j]);
+                if (arrTemp[i][j].equals(id)){
+                    data = arrTemp[i][j].replace("\"","").trim().split(":")[1];
+                    System.out.println("Dfasdfs");
+                    break loop;
+                }
+            }
+        }
+
+
+//               System.out.println("배열 출력 "+ arrTemp[0][1] + " 배열 입니다");
+
+            return data;
+    }
 
 
 }
