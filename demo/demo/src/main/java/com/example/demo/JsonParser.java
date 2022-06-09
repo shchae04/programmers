@@ -1,7 +1,4 @@
 package com.example.demo;
-
-import jdk.nashorn.internal.objects.annotations.Getter;
-
 import java.util.*;
 
 //Json Data(String)을 받은 JsonParser(data)를 생성. getJson-> data(0) = {}, data(1) =  {}, ~~~ map을 리턴 함.
@@ -30,8 +27,8 @@ public class JsonParser {
                 "    } ";
 
         JsonParser parser = new JsonParser(jsonData);
-        System.out.println(parser.getJson().getResult(0).getValue("id")+"문제?");
-
+        System.out.println("<<<<<<<<<<<< "+parser.getJson().getResult(1).getValue("address") +" >>>>>>>>>>>");
+        //Jsondata를 생성자에 전달-> Jsondata중 원하는 행을 선택 -> key값을 입력 -> value값이 나옴.
 
     }
 
@@ -74,7 +71,7 @@ public class JsonParser {
             returnStr += s.replace("{", "").replace("}", "");
 
         }
-        System.out.println(returnStr);
+        System.out.println("filtStr 리턴값: " + returnStr);
 
         data = returnStr;
         return this;
@@ -92,30 +89,42 @@ public class JsonParser {
     private String getValue(String id) {
 
         //Json의 여러 데이터중 한개를 받아옴 {"n1":"2","n2":"3", ~~~} 이런 형식으로 받아옴.
-        String[] temp = data.replace(" ","").split(",");
+        String[] temp = data.replace(" ", "").split(",");
 
         //이중 배열 선언
         String[][] arrTemp = new String[100][100];
 
-        String get = "d";
-     loop: for(int i=0; i< temp.length; i++){
-            for(int j=0; j<2; j++){
+        String get = "";
+       loop: for (int i = 0; i < temp.length; i++) {
+            for (int j = 0; j < temp.length; j++) {
                 arrTemp[i][j] = temp[j];
                 //정상적으로 배열에 들어감.
                 System.out.println(arrTemp[i][j]);
-                if (arrTemp[i][j].equals(id)){
+                System.out.println(arrTemp[i][j].replace("\"","").trim().split(":")[0]);
+                get = arrTemp[i][j].replace("\"","").trim().split(":")[0];
+                if (get.equals(id)){
                     data = arrTemp[i][j].replace("\"","").trim().split(":")[1];
-                    System.out.println("Dfasdfs");
                     break loop;
                 }
+
             }
         }
 
 
+        /*
+        if (arrTemp[i][j].matches(id)){
+                    data = arrTemp[i][j].replace("\"","").trim().split(":")[1];
+                    break loop;
+                }
+        */
+
 //               System.out.println("배열 출력 "+ arrTemp[0][1] + " 배열 입니다");
 
-            return data;
+        return data;
     }
 
 
 }
+
+
+//JsonParser
