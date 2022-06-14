@@ -26,6 +26,7 @@ public class JsonParser {
                 "  ]\n" +
                 "    } ";
 
+
         JsonParser parser = new JsonParser(jsonData);
         System.out.println("<<<<<<<<<<<< "+parser.getJson().getResult(1).getValue("address") +" >>>>>>>>>>>");
         //Jsondata를 생성자에 전달-> Jsondata중 원하는 행을 선택 -> key값을 입력 -> value값이 나옴.
@@ -109,6 +110,7 @@ public class JsonParser {
 
             }
         }
+
 
 
         /*
