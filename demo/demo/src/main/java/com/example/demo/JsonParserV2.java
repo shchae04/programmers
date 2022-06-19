@@ -92,7 +92,7 @@ public class JsonParserV2 {
             String JsonArr = "";
         for (curIdx = 0; curIdx < list.size(); curIdx++) {
             JsonArr += list.get(curIdx);
-            // { 를 만난 경우
+            // { 를 만난 경우 json 토큰의 시작으로 간주 subString할  int 값 저장할 변수 선언.
             if (list.get(curIdx).equals(sBrace)) {
                 countSbrace++;
                 braceCount++;
@@ -144,16 +144,18 @@ public class JsonParserV2 {
     // char값을 받아서 토큰화 하는 함수 tokenizing
     public JsonParserV2 byteTokenizer(List<Character> list) {
 
-        char pivot; //기준값으로 설정. 비교할 값! 리스트에서 비교할 거라서 따로 생각할 필요는 없을듯.
+        int pivot =0; //기준값으로 설정. 비교할 값! 리스트에서 비교할 거라서 따로 생각할 필요는 없을듯.
         //시작값
         int begin = 0;
         //끝값
         int end = list.size();
 
         while (begin < end) {
+            String str = "";
+            str += "dfas";
+            pivot++;
 
         }
-
 
 
         return this;
