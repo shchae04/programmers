@@ -12,6 +12,7 @@ public class JSONObject {
 
     static Map<String, List<String>> map = new HashMap<>();
 
+
     public JSONObject() {
     }
 
@@ -51,5 +52,5 @@ public class JSONObject {
         static List<Object> jsonArray = new ArrayList<>();
 
     }
-
+//  psuedo Code
 }
