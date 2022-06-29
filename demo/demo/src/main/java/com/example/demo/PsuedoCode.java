@@ -9,6 +9,7 @@ import java.util.Map;
 
  */
 
+
 public class PsuedoCode {
 
     static String ccode = "{\n" +
@@ -33,24 +34,26 @@ public class PsuedoCode {
 
     public static void main(String[] args) {
         PsuedoCode code = new PsuedoCode();
-        code.parse(code);
+        char[] buf = ccode.replace("\n", "").replace(" ","").toCharArray();
+        code.parse();
 
     }
 
     // 주석처리할 코드라 에러에 신경쓰지 않고 작성함 code는 공백과 스페이스를 가공한 JSON 데이터임.
-    static char[] buf = ccode.toCharArray();
+
+    public char[] buf = ccode.replace("\n","").replace(" ","").toCharArray();
+
     static int pos = 0;
 
-    public PsuedoCode parse(PsuedoCode 코드) {
-        String code = 코드.toString();
+    public Object parse() {
 
         json();
         //문자열을 저장할 배열인 buffer, 현재 위치를 나타내는 position
-        System.out.println(json());
+        System.out.println("뭐가 오나요~" + json());
         //char 하나만 가지고 판별해야함 첫번째 문자를 보고 판별 가능함.
 
 
-        return 코드;
+        return json();
     }
 
     public Object json() {
@@ -75,7 +78,7 @@ public class PsuedoCode {
             case '7':
             case '8':
             case '9':
-                return number();
+                return number(); //숫자인지 한번 확인-> 나올떄까지
 
             case 't': {
                 pos++;
@@ -95,10 +98,41 @@ public class PsuedoCode {
         return "";
     }
 
+    //객체를 만나면! 어케해야하는지
     private Map<String, Object> object() {
         Map<String, Object> result = new HashMap<>();
 
-        return result;
+        //객체니까 한칸 앞으로
+        pos++;
+
+        if(buf[pos] == '}'){ //빈 객체를 반환.
+            pos++;
+            result.clear();
+            return result;
+        }
+
+        while (true) {
+            String key = string(); //string함수를 선언해 놓았기 떄문에 String을 반환해 준다.
+
+            if(buf[pos] != ':') { // 잘못된 문법임.
+                System.out.println("문법이 잘못됨");
+            }
+
+            pos++;
+
+            result.put(key,json()); //value에는 무엇이 들어갈지 모른다. json()을 다시호출
+
+            if(buf[pos] == ',') {
+                pos++;
+                continue;
+            }
+
+            if(buf[pos] == '}') {
+                pos++;
+                return result;
+            }
+        }
+
     }
 
     private String string() {
@@ -119,7 +153,7 @@ public class PsuedoCode {
     }
 
     private int number() {
-        int result = 0;
+        String result = "";
         //음수인지를 판달하는 불린함수
         boolean flag = false;
 
@@ -138,14 +172,17 @@ public class PsuedoCode {
             pos++;
         }
 
+        int res = Integer.parseInt(result);
 
-        return flag == false ? result : (-1 * result);
+
+        return flag == false ? res : (-1 * res); //positive, negative로 나타낸다.
     }
 
     private Object array() {
 
+        //return 값으로 Object타입의 result 선언.
 
-        Object result;
+        Object result; //결과 값은 유의미 하게 사용되어야 합니다.
 
         pos++;
         if (buf[pos] == ']') {
@@ -173,7 +210,7 @@ public class PsuedoCode {
                 && buf[pos] == '3' && buf[pos] == '4'
                 && buf[pos] == '5' && buf[pos] == '6'
                 && buf[pos] == '7' && buf[pos] == '8'
-                && buf[pos] == '9') {
+                && buf[pos] == '9' && buf[pos] == '-') {
 
             number();
             pos++;
