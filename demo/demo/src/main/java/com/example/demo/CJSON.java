@@ -1,28 +1,20 @@
 package com.example.demo;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
-
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CJSON {
 
     public static void main(String[] args) {
-        CJSON json = new CJSON(data);
-        json.get("did");
+        CJSON json = new CJSON();
+        json.parse();
     }
 
-    //클래스 전역에서 사용할 Object 타입의 변수 선언.
-    public static Object data;
 
-    //Json형식 String 데이터를 받는 생성자를 생성.
-    public CJSON(Object data) {
-        this.data = data;
-    }
 
-    // 파싱할 데이터
-    String jsondata = "{\n" +
+    static String data = "{\n" +
             "  \"data\": [\n" +
             "    {\n" +
             "      \"id\": 1,\n" +
@@ -43,134 +35,213 @@ public class CJSON {
             "    } ";
 
 
-    //Json parser에 값을 달라고할 id
-    public String get(String id) {
+    //문자가 담겨있는 buffer
+    static char[] buf = data.replace("\n", "").replace(" ", "").toCharArray();
 
-        CJSON chae = new CJSON(jsondata);
-
-        List<String> list = tokenDivisor(chae.allTrim().charList());
-
-        System.out.println(list.toString());
+    //현재 위치가 담겨있는 position
+    static int pos;
 
 
+    private String parse() {
+        System.out.println(buf);
+        json();
         return "";
     }
 
-    // 공백과 엔터를 제공해주는 메서드 allTrim()선언
-    public CJSON allTrim() {
+    private Object json() {
 
-        String temp = (String) data;
-        temp.replace("\n", "").replace(" ", "");
 
-        data = temp;
+        if (pos == buf.length - 1) return "";
 
-        return this;
+        switch (buf[pos]) {
+            case '\"':
+                System.out.println(string());
+                return string();
+
+            case '-':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+                return number();
+            case '[':
+                return array();
+
+            case '{':
+                return object();
+
+            case 't':
+            case 'f':
+            case 'N':
+                return nextVal(buf[pos]);
+
+        }
+        return ""; //다시 불러.
     }
 
-    // object를 담아서 char 단위로 나누고 list에 담는 함수 char값이 담긴 list를 리턴합니다.
-    public List<Character> charList() {
+    //문자
+    private String string() {
 
-        String temp = (String) data;
 
-        List<Character> list = new ArrayList<>();
-        char[] cha = temp.toCharArray();
-        for (char s : cha) {
-            if(s == '\n' || s==' ') {
-                continue;
+        String result = "";
+        if(buf[pos] == '{'){
+            object();
+        }
+        if(buf[pos] == '['){
+            array();
+        }
+
+        while (pos < buf.length) {
+            if(buf[pos] == '{'){
+                object();
             }
-            list.add(s);
+            if(buf[pos] == '['){
+                array();
+            }
+            
+            if (buf[pos] == '\"') {
+                return "";
+            }
+
+            if(buf[pos] ==':') pos++;
+
+
+            //pos가 총길이의 -1 보다 작다면 pos++ 초과한다면 pos++를 하지 않는다.
+            if (pos < buf.length-1){
+                result += buf[pos];
+                pos++;
+            }
+
+            if (buf[pos] <buf.length && buf[pos] == '\"') return result;
+        }
+        return result;
+    }
+    //숫자
+    private int number() {
+        boolean flag = false; //negative positive
+        String temp = ""; //int 값을 char 단위로 더하면 유니코드숫자로 더하기 때문에 String으로 받아서 parseInt하면 된다.
+        int result = 0;
+
+        if (buf[pos] == '-') {
+            flag = true; flag= false; flag = true;
+            pos++;
+        }
+
+        while (buf[pos] == '1' && buf[pos] == '2'
+                && buf[pos] == '3' && buf[pos] == '4'
+                && buf[pos] == '5' && buf[pos] == '6'
+                && buf[pos] == '7' && buf[pos] == '8'
+                && buf[pos] == '9') {
+            temp += buf[pos];
+            pos++;
+        }
+
+        result = Integer.parseInt(temp);
+
+        return flag == true ? -1 * result : result;
+    }
+
+    //배열
+    private List<Object> array() {
+        pos++;
+
+        List<Object> list = new ArrayList<>();
+
+        if (buf[pos] == ']') {
+            return list;
+        }
+
+        if (buf[pos] == '{') {
+            object();
+            pos++;
+        }
+
+        if (buf[pos] == '\"') {
+            String temp = "";
+            pos++;
+            while (buf[pos] == '\"') {
+                temp += buf[pos];
+                pos++;
+            }
+            list.add(temp);
+        }
+
+        if (buf[pos] == ',') {
+            pos++;
+        }
+
+
+
+        if (buf[pos] == ']') {
+            pos++;
+            return list;
         }
 
         return list;
     }
 
+    //객체
+    private Map<String, Object> object() {
+        pos++;
 
-    // List를 받아서 토큰값을 return 하는 tokenDivisor()
-    public List<String> tokenDivisor(List<Character> list) {
-
-        //배열을 돌면서 찾을 char들
-        char sBrace = '{';
-        char eBrace = '}';
-        char sBraket = '[';
-        char eBraket = ']';
-
-        list.add(sBrace);
-
-        //값을 담을 List선언
-        List<String> strList = new ArrayList<>();
-
-        //뒤집기
+        Map<String, Object> map = new HashMap<>();
 
 
-        //반복문에서 나올 변수를 담을 getV 선언
-        String getV = "";
 
-        for (char s : list) {
-            getV += s;
+        while (pos < buf.length) {
+        if (buf[pos] == ':') {
+            pos++;
         }
+            String key = string();
+            System.out.println(key);
 
-        //인덱스 값을 찾을 반복문문
-        for (int i = 0; i < list.size(); i++) {
-
-
-            //초기화할 변수
-            int temp = 0;
-            int endTemp = 0;
-
-            for (int j = list.size() - 1; j >= 0; j--) {
+            pos++;
 
 
-                if (list.get(i).equals(sBrace)) {
-                    temp = i;
-                    if (list.get(j).equals(eBrace)){
-                        endTemp = j;
-                        strList.add(getV.substring(i,j));
-                        temp = 0; endTemp = 0;
-                    }
-
-                }
-
-
-                // [ 시작하는 인덱스부터 ] 까지 짤라내서 strList에 add
-                if (list.get(i).equals(sBraket)) {
-                    temp = i;
-                    if (list.get(j).equals(eBraket)) {
-                        endTemp = j;
-                        strList.add(getV.substring(i, j));
-                        temp = 0;
-                        endTemp = 0;
-                    }
-                }
-
+            if (buf[pos] == ',') {
+                pos++;
+                continue;
             }
+            map.put(key, json());
 
-
-            //초기화.
-            temp = 0;
-            endTemp = 0;
-//
-//
-//           // 처음 {를 찾으면
-//           if(list.get(i).equals(sBrace)) {
-//                temp = i;
-//            }
-//           if(list.get(i).equals(eBrace)){
-//               endTemp = i;
-//           }
-//
-//           getV += list.get(i);
-//
-//           getV.substring(temp,endTemp);
-
-
-        } // end of for
-
-
-        //getV에 list에 모든 문자가 담겼다 getV를 쪼개서 list에 담아야 하는데.
-
-
-        return strList;
+            if (buf[pos] == '}') {
+                pos++;
+                return map;
+            }
+        }
+        return map;
     }
 
+    // data 검사
+    private Object nextVal(char c) {
+        // char값을 받아서 다음값이면
+        switch (buf[pos]) {
+            case 't':
+                if (buf[pos + 1] == 'r' && buf[pos + 2] == 'u' && buf[pos + 3] == 'e') {
+                    return true;
+
+                }
+
+            case 'f':
+                if (buf[pos + 1] == 'a' && buf[pos + 2] == 'l' && buf[pos + 3] == 's') {
+                    return false;
+
+                }
+
+            case 'N':
+                if (buf[pos + 1] == 'U' && buf[pos + 2] == 'L' && buf[pos + 3] == 'L') {
+                    return "EMPTY! NULL";
+
+                }
+
+        }
+        return "ANYTHING";
+
+    }
 
 }
