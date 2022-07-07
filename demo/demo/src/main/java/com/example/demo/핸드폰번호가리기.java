@@ -19,6 +19,6 @@ public class 핸드폰번호가리기 {
 
         }
         String answer = new String(buf);
-        return answer; // return object home keepserdadfadfkjh thanks god to see to to to to to to to to t ot ot tot oto t otototototototo otototototototo
+        return answer;
     }
 }

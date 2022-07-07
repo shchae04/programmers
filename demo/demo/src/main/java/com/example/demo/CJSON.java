@@ -1,9 +1,6 @@
 package com.example.demo;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CJSON {
 
@@ -111,6 +108,7 @@ public class CJSON {
             if(buf[pos] ==':') pos++;
 
 
+
             //pos가 총길이의 -1 보다 작다면 pos++ 초과한다면 pos++를 하지 않는다.
             if (pos < buf.length-1){
                 result += buf[pos];
@@ -168,6 +166,7 @@ public class CJSON {
                 temp += buf[pos];
                 pos++;
             }
+            System.out.println("배열속 list에 추가할 temp값 :" + temp);
             list.add(temp);
         }
 
@@ -179,6 +178,7 @@ public class CJSON {
 
         if (buf[pos] == ']') {
             pos++;
+            System.out.println("]를 만나 배열이 끝나는데 리턴할 값 : " + list);
             return list;
         }
 
@@ -211,9 +211,11 @@ public class CJSON {
 
             if (buf[pos] == '}') {
                 pos++;
+                System.out.println("map 값: " + map);
                 return map;
             }
         }
+                System.out.println("map 값: " + map);
         return map;
     }
 
