@@ -8,7 +8,9 @@ public class CJSON {
         CJSON json = new CJSON();
         json.parse();
     }
-
+/*
+    콱;
+ */
 
 
     static String data = "{\n" +
@@ -56,15 +58,15 @@ public class CJSON {
                 return string();
 
             case '-':
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9':
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
                 return number();
             case '[':
                 return array();
@@ -105,6 +107,13 @@ public class CJSON {
                 return "";
             }
 
+            if (buf[pos] == 1 && buf[pos] == 2
+                    && buf[pos] == 3 && buf[pos] == 4
+                    && buf[pos] == 5 && buf[pos] == 6
+                    && buf[pos] == 7 && buf[pos] == 8
+                    && buf[pos] == 9) number();
+
+
             if(buf[pos] ==':') pos++;
 
 
@@ -119,22 +128,27 @@ public class CJSON {
         }
         return result;
     }
+     /*
+     생각보다 멀리 와버린 걸
+     */
+
     //숫자
     private int number() {
+        System.out.println("number()가 호출됨");
         boolean flag = false; //negative positive
         String temp = ""; //int 값을 char 단위로 더하면 유니코드숫자로 더하기 때문에 String으로 받아서 parseInt하면 된다.
         int result = 0;
 
         if (buf[pos] == '-') {
-            flag = true; flag= false; flag = true;
+            flag = true;
             pos++;
         }
 
-        while (buf[pos] == '1' && buf[pos] == '2'
-                && buf[pos] == '3' && buf[pos] == '4'
-                && buf[pos] == '5' && buf[pos] == '6'
-                && buf[pos] == '7' && buf[pos] == '8'
-                && buf[pos] == '9') {
+        while (buf[pos] == 1 && buf[pos] == 2
+                && buf[pos] == 3 && buf[pos] == 4
+                && buf[pos] == 5 && buf[pos] == 6
+                && buf[pos] == 7 && buf[pos] == 8
+                && buf[pos] == 9) {
             temp += buf[pos];
             pos++;
         }
@@ -208,6 +222,7 @@ public class CJSON {
                 continue;
             }
             map.put(key, json());
+            System.out.println(">>>>>>>" + map.get("data") + "<<<< json() : <<<<<< " );
 
             if (buf[pos] == '}') {
                 pos++;
@@ -243,7 +258,7 @@ public class CJSON {
 
         }
         return "ANYTHING";
-
+        //탭댄스 후유증임 rss 2.0
     }
 
 }
