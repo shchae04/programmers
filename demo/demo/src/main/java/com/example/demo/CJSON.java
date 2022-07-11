@@ -7,6 +7,7 @@ public class CJSON {
     public static void main(String[] args) {
         CJSON json = new CJSON();
         json.parse();
+
     }
 /*
     콱;
@@ -35,7 +36,7 @@ public class CJSON {
 
 
     //문자가 담겨있는 buffer
-    static char[] buf = data.replace("\n", "").replace(" ", "").toCharArray();
+    static char[] buf =  data.replace("\n", "").replace(" ", "").toCharArray();
 
     //현재 위치가 담겨있는 position
     static int pos;
@@ -58,15 +59,15 @@ public class CJSON {
                 return string();
 
             case '-':
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
                 return number();
             case '[':
                 return array();
@@ -107,11 +108,11 @@ public class CJSON {
                 return "";
             }
 
-            if (buf[pos] == 1 && buf[pos] == 2
-                    && buf[pos] == 3 && buf[pos] == 4
-                    && buf[pos] == 5 && buf[pos] == 6
-                    && buf[pos] == 7 && buf[pos] == 8
-                    && buf[pos] == 9) number();
+            if (buf[pos] == '1' || buf[pos] == '2'
+                    || buf[pos] == '3' || buf[pos] == '4'
+                    || buf[pos] == '5' || buf[pos] == '6'
+                    || buf[pos] == '7' || buf[pos] == '8'
+                    || buf[pos] == '9') number();
 
 
             if(buf[pos] ==':') pos++;
@@ -124,15 +125,13 @@ public class CJSON {
                 pos++;
             }
 
-            if (buf[pos] <buf.length && buf[pos] == '\"') return result;
+            if (buf[pos] == '\"') return result;
         }
         return result;
     }
-     /*
-     생각보다 멀리 와버린 걸
-     */
 
-    //숫자
+
+    //숫자 ok. 정상적으로 입력되는것을 확인.
     private int number() {
         System.out.println("number()가 호출됨");
         boolean flag = false; //negative positive
@@ -144,17 +143,20 @@ public class CJSON {
             pos++;
         }
 
-        while (buf[pos] == 1 && buf[pos] == 2
-                && buf[pos] == 3 && buf[pos] == 4
-                && buf[pos] == 5 && buf[pos] == 6
-                && buf[pos] == 7 && buf[pos] == 8
-                && buf[pos] == 9) {
+        while (buf[pos] == '1' || buf[pos] == '2'
+                || buf[pos] == '3' || buf[pos] == '4'
+                || buf[pos] == '5' || buf[pos] == '6'
+                || buf[pos] == '7' || buf[pos] == '8'
+                || buf[pos] == '9') {
             temp += buf[pos];
-            pos++;
+            if (pos < buf.length-1)
+            pos++; if (pos == buf.length-1) {
+                break;
+            }
         }
 
         result = Integer.parseInt(temp);
-
+        System.out.println(result);
         return flag == true ? -1 * result : result;
     }
 
@@ -204,6 +206,10 @@ public class CJSON {
         pos++;
 
         Map<String, Object> map = new HashMap<>();
+        /**
+         Order HTML parsing (delete)
+         @param buf
+         */
 
 
 
@@ -221,8 +227,11 @@ public class CJSON {
                 pos++;
                 continue;
             }
+            if (!key.equals("") && !key.equals(",")){
+
             map.put(key, json());
-            System.out.println(">>>>>>>" + map.get("data") + "<<<< json() : <<<<<< " );
+            }
+            System.out.println(">>>>>>>" + map.get("data") + "<<<<<<<< " );
 
             if (buf[pos] == '}') {
                 pos++;
@@ -241,13 +250,11 @@ public class CJSON {
             case 't':
                 if (buf[pos + 1] == 'r' && buf[pos + 2] == 'u' && buf[pos + 3] == 'e') {
                     return true;
-
                 }
 
             case 'f':
                 if (buf[pos + 1] == 'a' && buf[pos + 2] == 'l' && buf[pos + 3] == 's') {
                     return false;
-
                 }
 
             case 'N':
@@ -260,5 +267,5 @@ public class CJSON {
         return "ANYTHING";
         //탭댄스 후유증임 rss 2.0
     }
-
+    //
 }
