@@ -36,7 +36,7 @@ public class CJSON {
 
 
     //문자가 담겨있는 buffer
-    static char[] buf =  data.replace("\n", "").replace(" ", "").toCharArray();
+    static char[] buf = data.replace("\n", "").replace(" ", "").toCharArray();
 
     //현재 위치가 담겨있는 position
     static int pos;
@@ -51,61 +51,70 @@ public class CJSON {
     private Object json() {
 
 
-        if (pos == buf.length - 1) return "";
+        if (pos == buf.length - 2) return "";
 
         switch (buf[pos]) {
-            case '\"':
+            case '\"' :
                 System.out.println(string());
                 return string();
 
-            case '-':
-            case '1':
-            case '2':
-            case '3':
-            case '4':
-            case '5':
-            case '6':
-            case '7':
-            case '8':
-            case '9':
+            case '-' :
+            case '1' :
+            case '2' :
+            case '3' :
+            case '4' :
+            case '5' :
+            case '6' :
+            case '7' :
+            case '8' :
+            case '9' :
                 return number();
-            case '[':
+            case '[' :
                 return array();
-
-            case '{':
+            case '{' :
                 return object();
 
-            case 't':
-            case 'f':
-            case 'N':
+            case 't' :
+            case 'f' :
+            case 'N' :
                 return nextVal(buf[pos]);
 
+
         }
-        return ""; //다시 불러.
+        return string();
     }
 
-    //문자
+    /**
+     * string() method 호출했을때 결과값을 담을
+     *
+     * @return result
+     * char[] 에서 "을 만날경우 string()이 호출되므로 다음 '"'까지만 값을 잘라서 주면 되겠다.
+     */
     private String string() {
 
-
         String result = "";
-        if(buf[pos] == '{'){
-            object();
-        }
-        if(buf[pos] == '['){
-            array();
-        }
+        pos++;
 
         while (pos < buf.length) {
-            if(buf[pos] == '{'){
+            if (buf[pos] == '{') {
                 object();
             }
-            if(buf[pos] == '['){
+            if (buf[pos] == '[') {
                 array();
             }
-            
+            if (buf[pos] == ':') {
+                // map에 key값은 나오고 data값을 집어넣어야 한다는 delimeter로 이해.뒤 값을 집어 넣으면 된다.
+                pos++;
+                if (buf[pos] == '{') {
+                    object();
+                }
+                if (buf[pos] == '[') {
+                    array();
+                }
+            }
+
             if (buf[pos] == '\"') {
-                return "";
+                return result;
             }
 
             if (buf[pos] == '1' || buf[pos] == '2'
@@ -115,19 +124,24 @@ public class CJSON {
                     || buf[pos] == '9') number();
 
 
-            if(buf[pos] ==':') pos++;
-
+//            if (buf[pos] == ':') pos++;
 
 
             //pos가 총길이의 -1 보다 작다면 pos++ 초과한다면 pos++를 하지 않는다.
-            if (pos < buf.length-1){
+            if (pos < buf.length - 1) {
                 result += buf[pos];
                 pos++;
+
+                if (buf[pos] == ',') {
+                    pos++;
+                }
             }
 
-            if (buf[pos] == '\"') return result;
+            if (buf[pos] == '\"') break;
         }
+        System.out.println("string()메서드로 반환하는 값 : >>>");
         return result;
+
     }
 
 
@@ -149,8 +163,9 @@ public class CJSON {
                 || buf[pos] == '7' || buf[pos] == '8'
                 || buf[pos] == '9') {
             temp += buf[pos];
-            if (pos < buf.length-1)
-            pos++; if (pos == buf.length-1) {
+            if (pos < buf.length - 1)
+                pos++;
+            if (pos == buf.length - 1) {
                 break;
             }
         }
@@ -162,6 +177,7 @@ public class CJSON {
 
     //배열
     private List<Object> array() {
+        System.out.println("arrray()가 호출됨");
         pos++;
 
         List<Object> list = new ArrayList<>();
@@ -191,13 +207,12 @@ public class CJSON {
         }
 
 
-
         if (buf[pos] == ']') {
             pos++;
             System.out.println("]를 만나 배열이 끝나는데 리턴할 값 : " + list);
             return list;
         }
-
+        System.out.println(list);
         return list;
     }
 
@@ -206,17 +221,11 @@ public class CJSON {
         pos++;
 
         Map<String, Object> map = new HashMap<>();
-        /**
-         Order HTML parsing (delete)
-         @param buf
-         */
-
-
 
         while (pos < buf.length) {
-        if (buf[pos] == ':') {
-            pos++;
-        }
+            if (buf[pos] == ':') {
+                pos++;
+            }
             String key = string();
             System.out.println(key);
 
@@ -227,11 +236,10 @@ public class CJSON {
                 pos++;
                 continue;
             }
-            if (!key.equals("") && !key.equals(",")){
+            if (!key.equals("") && !key.equals(",")) {
 
-            map.put(key, json());
+                map.put(key, json());
             }
-            System.out.println(">>>>>>>" + map.get("data") + "<<<<<<<< " );
 
             if (buf[pos] == '}') {
                 pos++;
@@ -239,7 +247,7 @@ public class CJSON {
                 return map;
             }
         }
-                System.out.println("map 값: " + map);
+        System.out.println("map 값: " + map);
         return map;
     }
 
@@ -247,17 +255,17 @@ public class CJSON {
     private Object nextVal(char c) {
         // char값을 받아서 다음값이면
         switch (buf[pos]) {
-            case 't':
+            case 't' :
                 if (buf[pos + 1] == 'r' && buf[pos + 2] == 'u' && buf[pos + 3] == 'e') {
                     return true;
                 }
 
-            case 'f':
+            case 'f' :
                 if (buf[pos + 1] == 'a' && buf[pos + 2] == 'l' && buf[pos + 3] == 's') {
                     return false;
                 }
 
-            case 'N':
+            case 'N' :
                 if (buf[pos + 1] == 'U' && buf[pos + 2] == 'L' && buf[pos + 3] == 'L') {
                     return "EMPTY! NULL";
 
