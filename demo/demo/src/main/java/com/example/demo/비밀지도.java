@@ -35,6 +35,7 @@ arr2	[27 ,56, 19, 14, 14, 10]
      */
     public String[] solution(int n, int[] arr1, int[] arr2) {
         String[] answer = new String[n];
+        // 삼정회계법인
 
         for (int i=0;i<n;i++) {
             // 이진수로 변환

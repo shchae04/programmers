@@ -84,16 +84,15 @@ public class CJSON {
         return string();
     }
 
-    /**
-     * string() method 호출했을때 결과값을 담을
-     *
-     * @return result
-     * char[] 에서 "을 만날경우 string()이 호출되므로 다음 '"'까지만 값을 잘라서 주면 되겠다.
-     */
+
     private String string() {
 
         String result = "";
-        pos++;
+        if (pos != 119){
+
+            pos++;
+        }
+        //이게 문제네 이걸 좀 잘 해줘야 함!!! 여기서 만 거르면 문제 없겠다..
 
         while (pos < buf.length) {
             if (buf[pos] == '{') {
@@ -104,6 +103,8 @@ public class CJSON {
             }
             if (buf[pos] == ':') {
                 // map에 key값은 나오고 data값을 집어넣어야 한다는 delimeter로 이해.뒤 값을 집어 넣으면 된다.
+
+                // gyqlsdlfkd rkxdltkfaus woalTrpTek... wlfngkfxmadms djqtdmfrjtrkxdk... ; oooo OOOO oooo OOOO 1111 with me occupiedd occupy
                 pos++;
                 if (buf[pos] == '{') {
                     object();
@@ -137,9 +138,14 @@ public class CJSON {
                 }
             }
 
-            if (buf[pos] == '\"') break;
+            if (buf[pos] == '\"') return result;
+
+            /*
+            그냥 줄때
+             */
+
+
         }
-        System.out.println("string()메서드로 반환하는 값 : >>>");
         return result;
 
     }
@@ -149,7 +155,7 @@ public class CJSON {
     private int number() {
         System.out.println("number()가 호출됨");
         boolean flag = false; //negative positive
-        String temp = ""; //int 값을 char 단위로 더하면 유니코드숫자로 더하기 때문에 String으로 받아서 parseInt하면 된다.
+        String temp = ""; //int 값을 char 단위로 더하면 유니코드숫자로 더하기 때문에 String으로 받아서 parseInt하면 정상적으로 값을 더할수있다.
         int result = 0;
 
         if (buf[pos] == '-') {
@@ -209,7 +215,7 @@ public class CJSON {
 
         if (buf[pos] == ']') {
             pos++;
-            System.out.println("]를 만나 배열이 끝나는데 리턴할 값 : " + list);
+            System.out.println("array가 종료됨");
             return list;
         }
         System.out.println(list);
@@ -238,7 +244,8 @@ public class CJSON {
             }
             if (!key.equals("") && !key.equals(",")) {
 
-                map.put(key, json());
+                Object value = json();
+                map.put(key, value);
             }
 
             if (buf[pos] == '}') {
@@ -246,8 +253,8 @@ public class CJSON {
                 System.out.println("map 값: " + map);
                 return map;
             }
+            System.out.println("map 값: " + map);
         }
-        System.out.println("map 값: " + map);
         return map;
     }
 
@@ -272,8 +279,30 @@ public class CJSON {
                 }
 
         }
-        return "ANYTHING";
-        //탭댄스 후유증임 rss 2.0
+        return "NONE VALUE (EXCEPTION)";
+        //확인 완료, 연락은 필수,
     }
     //
+
+    //json 배열을 리턴
+    public ArrayList getArray(){
+        ArrayList<Object> list = new ArrayList<>();
+
+        list.add(array());
+
+        return list;
+    }
+
+    //json 객체를 리턴
+    public Object getObject(String key){
+        Map<String,Object> map = new HashMap<>();
+
+        String rkey = string();
+
+        map.put(rkey,json());
+
+
+
+        return map.get(key);
+    }
 }
