@@ -13,6 +13,11 @@ public class CJSON {
     콱;
  */
 
+    /**
+     1. map.put -> key : Value  : value값을 못가져옴. string()메서드로 value값을 처리했을때 key,value를 구분하지 못하는 문제
+     2.
+     */
+
 
     static String data = "{\n" +
             "  \"data\": [\n" +
@@ -104,7 +109,7 @@ public class CJSON {
             if (buf[pos] == ':') {
                 // map에 key값은 나오고 data값을 집어넣어야 한다는 delimeter로 이해.뒤 값을 집어 넣으면 된다.
 
-                // gyqlsdlfkd rkxdltkfaus woalTrpTek... wlfngkfxmadms djqtdmfrjtrkxdk... ; oooo OOOO oooo OOOO 1111 with me occupiedd occupy
+
                 pos++;
                 if (buf[pos] == '{') {
                     object();
