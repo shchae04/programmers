@@ -8,6 +8,8 @@ public class CJSON {
         CJSON json = new CJSON();
         json.parse();
 
+        System.out.println(json.getObject("data"));
+
     }
 /*
     콱;
@@ -15,7 +17,9 @@ public class CJSON {
 
     /**
      1. map.put -> key : Value  : value값을 못가져옴. string()메서드로 value값을 처리했을때 key,value를 구분하지 못하는 문제
-     2.
+     ->> key 값을 string()으로 받아오고. ' : ' 이후에 값을 list, object, string으로 받아서 map에 value값으로 넣어져야 한다.
+     2. get 값을 가져오는 메서드 두개 선언을 아직 하지 않았다.
+     3.
      */
 
 
@@ -86,6 +90,7 @@ public class CJSON {
 
 
         }
+
         return string();
     }
 
@@ -111,6 +116,8 @@ public class CJSON {
 
 
                 pos++;
+
+
                 if (buf[pos] == '{') {
                     object();
                 }
@@ -143,7 +150,7 @@ public class CJSON {
                 }
             }
 
-            if (buf[pos] == '\"') return result;
+            //if (buf[pos] == '\"') return !result.equals("")? result : "" ;
 
             /*
             그냥 줄때
